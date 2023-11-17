@@ -5,7 +5,6 @@ import './App.css'
 import Rutas from './Rutas';
 import Footer from './Views/Footer';
 import Header from './Views/Header';
-import FormOne from './Components/Formulario/Formulario'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -13,7 +12,6 @@ function App() {
   return (
     <Chakra>
       <Header />
-      <FormOne />
       <Rutas />
       <Footer />
     </Chakra>

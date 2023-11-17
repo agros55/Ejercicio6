@@ -1,4 +1,5 @@
 import { Box, Button, Image, Center, Heading, Text } from "@chakra-ui/react";
+import FormOne from "../Components/Formulario/Formulario";
 
 const Home = () => {
     return (
@@ -9,6 +10,7 @@ const Home = () => {
                 <Button>Mi boton</Button>
                 <Image />
             </Box>
+            <FormOne />
         </Center>
     )
 }
