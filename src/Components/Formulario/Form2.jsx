@@ -1,5 +1,6 @@
 import { Box } from '@chakra-ui/layout';
-import { Center, Button, FormControl, FormLabel, Input, Text, Image, Heading } from '@chakra-ui/react';
+import { Center, Button, FormControl, FormLabel, Input, Text, Image, Heading, useDisclosure } from '@chakra-ui/react';
+import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton } from '@chakra-ui/react'
 import { Formik } from 'formik';
 import { useState } from 'react';
 import * as Yup from 'yup';
@@ -50,9 +51,7 @@ const Form2 = () => {
         <div>
             <Formik
                 onSubmit={(values) => {
-                    console.log(values)
-                    setIsSubmitting(true);
-                    console.log(isSubmitting)
+                    alert('Los datos han sido enviados con éxito.')
                 }}
                 validationSchema={validaciones}
                 initialValues={{
