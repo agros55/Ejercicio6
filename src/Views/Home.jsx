@@ -1,16 +1,10 @@
 import { Box, Button, Image, Center, Heading, Text } from "@chakra-ui/react";
-import FormOne from "../Components/Formulario/Formulario";
+import Form2 from "../Components/Formulario/Form2";
 
 const Home = () => {
     return (
         <Center>
-            <Box display="flex" flexDir="column" justifyContent="center">
-                <Heading>Home</Heading>
-                <Text>Pagina de inicio</Text>
-                <Button>Mi boton</Button>
-                <Image />
-            </Box>
-            <FormOne />
+            <Form2 />
         </Center>
     )
 }
