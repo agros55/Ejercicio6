@@ -1,10 +1,10 @@
-import { Box, Button, Image, Center, Heading, Text } from "@chakra-ui/react";
-import Form2 from "../Components/Formulario/Form2";
+import { Center } from "@chakra-ui/react";
+import Formulario from "../Components/Formulario/Formulario";
 
 const Home = () => {
     return (
         <Center>
-            <Form2 />
+            <Formulario />
         </Center>
     )
 }

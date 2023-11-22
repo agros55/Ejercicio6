@@ -1,12 +1,11 @@
 import { Box } from '@chakra-ui/layout';
-import { Center, Button, FormControl, FormLabel, Input, Text } from '@chakra-ui/react';
+import { Center, Button, FormControl, FormLabel, Input, Text, Image, Heading, InputGroup, InputRightElement, InputAddon, InputRightAddon, InputLeftAddon } from '@chakra-ui/react';
 import { Formik } from 'formik';
 import { useState } from 'react';
 import * as Yup from 'yup';
+import { EmailIcon, LockIcon, PhoneIcon, ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 
-
-
-const FormOne = () => {
+const Formulario = () => {
     const validaciones = Yup.object().shape({
         nombre: Yup.string()
             .min(5, 'Debe contener al menos 5 caracteres.')
@@ -26,9 +25,6 @@ const FormOne = () => {
         password: Yup.string()
             .min(6, 'Debe contener al menos 6 caracteres.')
             .max(50, 'Muy largo')
-            .matches(/[0-9]/, '-Un numero.')
-            .matches(/[a-z]/, '-Una minuscula.')
-            .matches(/[A-Z]/, '-Una Mayuscula.')
             .required('El password es requerido.'),
         confirmarPassword: Yup.string()
             .test('password-should-match', 'Las contraseñas no coinciden.', function (value) {
@@ -39,18 +35,23 @@ const FormOne = () => {
     const [isSubmitting, setIsSubmitting] = useState(false)
 
     const [mostrarPassword, setMostrarPassword] = useState(false)
+    const [mostrarPassword2, setMostrarPassword2] = useState(false)
+
+    const [errorNombre, setErrorNombre] = useState(false)
 
     function alternarPassword() {
         setMostrarPassword(!mostrarPassword)
+    }
+
+    function alternarPassword2() {
+        setMostrarPassword2(!mostrarPassword2)
     }
 
     return (
         <div>
             <Formik
                 onSubmit={(values) => {
-                    console.log(values)
-                    setIsSubmitting(true);
-                    console.log(isSubmitting)
+                    alert('Los datos han sido enviados con éxito.')
                 }}
                 validationSchema={validaciones}
                 initialValues={{
@@ -71,93 +72,138 @@ const FormOne = () => {
                     handleSubmit,
                     isSubmitting,
                 }) => (
-                    <Box w="50vw" p="50px">
-                        <FormControl >
+                    <Box w={{ base: "90vw", md: "50vw" }} mt={{ base: 5, md: 10 }} >
+                        <Heading>Registro</Heading>
+                        <FormControl pb={{ base: "15vh", md: "15vh" }}>
                             <form disabled={"disabled"} onSubmit={handleSubmit}>
                                 {/* Campo para nombre */}
-                                <Box display="flex" justifyContent="space-between">
-                                    <FormLabel >Nombre</FormLabel>
-                                    <Input w="80%"
-                                        id='nombre'
-                                        name='nombre'
-                                        type='text'
-                                        onChange={handleChange}
-                                        onBlur={handleBlur}
-                                        value={values.nombre}
-                                    />
-                                </Box>
-                                <Text textAlign="right">{errors.nombre && touched.nombre && errors.nombre}</Text>
 
-                                {/* Campo para apellido */}
-                                <Box display="flex" justifyContent="space-between">
-                                    <FormLabel >Apellido</FormLabel>
-                                    <Input w="80%"
-                                        id='apellido'
-                                        name='apellido'
-                                        type='text'
-                                        onChange={handleChange}
-                                        onBlur={handleBlur}
-                                        value={values.apellido}
-                                    />
-                                </Box>
-                                <Text textAlign="right">{errors.apellido && touched.apellido && errors.apellido}</Text>
+                                <Box mt={5} display="grid" gridTemplateColumns={{ base: "repeat(1, 1fr)", md: "repeat(2, 1fr)" }} gap={{ base: 0, md: 5 }}>
+                                    <FormControl display="flex" flexDir="column" pos="relative" pb={5}>
+                                        <FormLabel >Nombre</FormLabel>
+                                        <InputGroup borderRightRadius='full'>
+                                            <Input
+                                                variant={(errors.nombre && touched.nombre) ? 'error' : 'normal'}
+                                                id='nombre'
+                                                name='nombre'
+                                                type='text'
+                                                onChange={handleChange}
+                                                onBlur={handleBlur}
+                                                value={values.nombre}
+                                            />
+                                        </InputGroup>
+                                        <Text fontSize={12} color="red" pos="absolute" bottom="0" right={0}>{errors.nombre && touched.nombre && errors.nombre}</Text>
+                                    </FormControl>
 
-                                {/* Campo para email */}
-                                <Box display="flex" justifyContent="space-between">
-                                    <FormLabel>Email</FormLabel>
-                                    <Input w="80%"
-                                        id='email'
-                                        name='email'
-                                        type='text'
-                                        onChange={handleChange}
-                                        onBlur={handleBlur}
-                                        value={values.email}
-                                    />
+                                    {/* Campo para apellido */}
+                                    <FormControl display="flex" flexDir="column" pos="relative" pb={5}>
+                                        <FormLabel >Apellido </FormLabel>
+                                        <Input
+                                            variant={(errors.apellido && touched.apellido) ? 'error' : 'normal'}
+                                            id='apellido'
+                                            name='apellido'
+                                            type='text'
+                                            onChange={handleChange}
+                                            onBlur={handleBlur}
+                                            value={values.apellido}
+                                        />
+                                        <Text fontSize={12} color="red" pos="absolute" bottom="0" right={0}>{errors.apellido && touched.apellido && errors.apellido}</Text>
+                                    </FormControl>
                                 </Box>
-                                <Text textAlign="right">{errors.email && touched.email && errors.email}</Text>
 
-                                {/* Campo para telefono */}
-                                <Box display="flex" justifyContent="space-between">
-                                    <FormLabel>Teléfono</FormLabel>
-                                    <Input w="80%"
-                                        id='telefono'
-                                        name='telefono'
-                                        type='number'
-                                        onChange={handleChange}
-                                        onBlur={handleBlur}
-                                        value={values.telefono}
-                                    />
-                                </Box>
-                                <Text textAlign="right">{errors.telefono && touched.telefono && errors.telefono}</Text>
+                                <Box display="grid" gridTemplateColumns={{ base: "repeat(1, 1fr)", md: "repeat(2, 1fr)" }} gap={{ base: 0, md: 5 }}>
+                                    {/* Campo para email */}
+                                    <Box display="flex" flexDir="column" pos="relative" pb={5}>
+                                        <FormLabel>Email</FormLabel>
+                                        <InputGroup>
+                                            <InputLeftAddon><EmailIcon /></InputLeftAddon>
+                                            <Input
+                                                variant={(errors.email && touched.email) ? 'error' : 'normal'}
+                                                id='email'
+                                                name='email'
+                                                type='text'
+                                                onChange={handleChange}
+                                                onBlur={handleBlur}
+                                                value={values.email}
+                                            />
+                                        </InputGroup>
+                                        <Text fontSize={12} color="red" pos="absolute" bottom="0" right={0}>{errors.email && touched.email && errors.email}</Text>
+                                    </Box>
 
-                                {/* Campo para password */}
-                                <Box display="flex" justifyContent="space-between">
-                                    <FormLabel>Password</FormLabel>
-                                    <Input w="80%"
-                                        id='password'
-                                        name='password'
-                                        type={mostrarPassword ? 'text' : 'password'}
-                                        onChange={handleChange}
-                                        onBlur={handleBlur}
-                                        value={values.password}
-                                    />
-                                    <Button onClick={alternarPassword} pos="absolute" right={0} zIndex={10}>Ver password</Button>
+                                    {/* Campo para telefono */}
+                                    <Box display="flex" flexDir="column" pos="relative" pb={5}>
+                                        <FormLabel display="block">Teléfono</FormLabel>
+                                        <InputGroup>
+                                            <InputLeftAddon><PhoneIcon /></InputLeftAddon>
+                                            <Input
+                                                variant={(errors.telefono && touched.telefono) ? 'error' : 'normal'}
+                                                id='telefono'
+                                                name='telefono'
+                                                type='number'
+                                                onChange={handleChange}
+                                                onBlur={handleBlur}
+                                                value={values.telefono}
+                                            />
+                                        </InputGroup>
+                                        <Text fontSize={12} color="red" pos="absolute" bottom="0" right={0}>{errors.telefono && touched.telefono && errors.telefono}</Text>
+                                    </Box>
                                 </Box>
-                                <Text textAlign="right">{errors.password && touched.password && errors.password}</Text>
 
-                                {/* Campo para confirmar password */}
-                                <Box display="flex" justifyContent="space-between">
-                                    <FormLabel>Confirmar password</FormLabel>
-                                    <Input w="80%"
-                                        id='confirmarPassword'
-                                        name='confirmarPassword'
-                                        type='password'
-                                        onChange={handleChange}
-                                        onBlur={handleBlur}
-                                        value={values.confirmarPassword}
-                                    />
+                                <Box display="grid" gridTemplateColumns={{ base: "repeat(1, 1fr)", md: "repeat(2, 1fr)" }} gap={{ base: 0, md: 5 }}>
+                                    {/* Campo para password */}
+                                    <Box display="flex" flexDir="column" pos="relative" pb={5}>
+                                        <FormLabel>Password</FormLabel>
+                                        <InputGroup>
+                                            <InputLeftAddon><LockIcon /></InputLeftAddon>
+                                            <Input
+                                                variant={(errors.password && touched.password) ? 'error' : 'normal'}
+                                                id='password'
+                                                name='password'
+                                                type={mostrarPassword ? 'text' : 'password'}
+                                                onChange={handleChange}
+                                                onBlur={handleBlur}
+                                                value={values.password}
+                                            />
+                                            <InputRightAddon
+                                                w='fit-content'
+                                                p={0}
+                                            >
+                                                <Button variant={'inputMD'} size={'input'} h='100%' onClick={alternarPassword}>
+                                                    {mostrarPassword ? <ViewOffIcon /> : <ViewIcon />}
+                                                </Button>
+                                            </InputRightAddon>
+                                        </InputGroup>
+
+                                        <Text fontSize={12} color="red" pos="absolute" bottom="0" right={0}>{errors.password && touched.password && errors.password}</Text>
+                                    </Box>
+
+                                    {/* Campo para confirmar password */}
+                                    <Box display="flex" flexDir="column" pos="relative" pb={5}>
+                                        <FormLabel>Confirmar password</FormLabel>
+                                        <InputGroup>
+                                            <InputLeftAddon><LockIcon /></InputLeftAddon>
+                                            <Input
+                                                variant={(errors.confirmarPassword && touched.confirmarPassword) ? 'error' : 'normal'}
+                                                id='confirmarPassword'
+                                                name='confirmarPassword'
+                                                type={mostrarPassword2 ? 'text' : 'password'}
+                                                onChange={handleChange}
+                                                onBlur={handleBlur}
+                                                value={values.confirmarPassword}
+                                            />
+                                            <InputRightAddon
+                                                w='fit-content'
+                                                p={0}
+                                            >
+                                                <Button variant={'inputMD'} size={'input'} h='100%' onClick={alternarPassword2}>
+                                                    {mostrarPassword2 ? <ViewOffIcon /> : <ViewIcon />}
+                                                </Button>
+                                            </InputRightAddon>
+                                        </InputGroup>
+                                        <Text fontSize={12} color="red" pos="absolute" bottom="0" right={0}>{errors.confirmarPassword && touched.confirmarPassword && errors.confirmarPassword}</Text>
+                                    </Box>
+
                                 </Box>
-                                <Text textAlign="right">{errors.confirmarPassword && touched.confirmarPassword && errors.confirmarPassword}</Text>
                                 <br />
 
                                 <Button type='submit'>Enviar</Button>
@@ -171,4 +217,4 @@ const FormOne = () => {
     )
 }
 
-export default FormOne
+export default Formulario

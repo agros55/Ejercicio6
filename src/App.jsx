@@ -4,12 +4,13 @@ import { useState } from 'react'
 import Rutas from './Rutas';
 import Footer from './Views/Footer';
 import Header from './Views/Header';
+import theme from './Theme/Theme'
 
 function App() {
   const [count, setCount] = useState(0)
 
   return (
-    <Chakra>
+    <Chakra theme={theme}>
       <Header />
       <Rutas />
       <Footer />
